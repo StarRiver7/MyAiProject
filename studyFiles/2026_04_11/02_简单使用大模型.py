@@ -1,22 +1,17 @@
 # 该代码功能：基于指定产品名称，调用大模型生成面向年轻人的3条吸引人广告语
 # 核心技术栈：LangChain（大模型应用框架） + 通义千问模型 + Pydantic（密钥安全管理） + 输出解析
 
-# 从langchain_openai模块导入ChatOpenAI类（用于调用兼容OpenAI接口的大模型，此处对接通义千问）
-from langchain_openai import ChatOpenAI  
-# 从langchain_core.prompts模块导入PromptTemplate类（用于构建标准化提示词模板）
+from langchain_openai import ChatOpenAI
 from langchain_core.prompts import PromptTemplate
-# 从pydantic模块导入SecretStr类（用于安全存储和管理敏感信息，如API密钥，避免明文泄露）
 from pydantic import SecretStr
-# 从langchain_core.output_parsers模块导入StrOutputParser类（用于将大模型返回结果解析为纯字符串格式）
 from langchain_core.output_parsers import StrOutputParser
 import os
 
-# 实例化ChatOpenAI对象，配置大模型连接参数，用于后续调用大模型
 model = ChatOpenAI(
     model="qwen3-max", 
     base_url= "https://dashscope.aliyuncs.com/compatible-mode/v1",
-    api_key=os.getenv("DASHSCOPE_API_KEY"),
-    temperature=0.7  # 设置模型生成温度（取值0-2），0.7表示生成内容兼具创造性和稳定性（值越高创造性越强，越低越严谨）
+    api_key=SecretStr(os.environ["DASH_SCOPE_API_KEY"]),
+    temperature=0.7
 )
 
 # 创建提示词模板对象，用于标准化生成大模型的输入提示词

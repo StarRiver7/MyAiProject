@@ -43,7 +43,6 @@ prompt2 = PromptTemplate(
     template_format = "f-string"  # 指定模板的格式化类型为f-string（支持Python的f-string语法）
 )
 
-# 打印prompt2对象本身，查看其基本信息
 print(prompt2)
 # 仅传入动态变量user_input的值，即可格式化生成完整提示词（analysis_type使用partial_variables中设置的默认值）
 print(prompt2.format(user_input="今天天气不错"))
